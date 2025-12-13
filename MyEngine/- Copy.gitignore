@@ -1,0 +1,74 @@
+# =========================
+# Visual Studio files
+# =========================
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Visual Studio Build Results
+Debug/
+DebugPublic/
+Release/
+RelWithDebInfo/
+MinSizeRel/
+x64/
+x86/
+ARM/
+ARM64/
+
+# MSBuild artifacts
+*.VC.db
+*.VC.opendb
+*.VC.VC.opendb
+*.pdb
+*.idb
+*.ilk
+*.log
+*.tlog
+*.lastbuildstate
+
+# =========================
+# CMake (Visual Studio)
+# =========================
+CMakeCache.txt
+CMakeFiles/
+CMakeScripts/
+Testing/
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+_deps/
+
+# CMake presets (user-specific)
+CMakeUserPresets.json
+
+# Out-of-source build folders
+build/
+out/
+cmake-build-*/
+
+# =========================
+# Generated binaries
+# =========================
+*.exe
+*.dll
+*.lib
+*.exp
+*.obj
+
+# =========================
+# Logs & temp files
+# =========================
+*.tmp
+*.cache
+*.log
+
+# =========================
+# OS-specific
+# =========================
+Thumbs.db
+.DS_Store
