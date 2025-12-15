@@ -1,5 +1,6 @@
 #pragma once
 #include <chrono>
+#include "Core/Timer.h"
 
 class Engine
 {
@@ -11,8 +12,7 @@ private:
 	void Tick(float _deltaTime);
 	void ShutDown();
 
-	using clock = std::chrono::steady_clock;
-	clock::time_point m_lastTime;
+	Timer m_timer;
 
 	bool m_isRunning;
 };

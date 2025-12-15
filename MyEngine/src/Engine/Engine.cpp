@@ -10,12 +10,8 @@ void Engine::Run()
     while (m_isRunning)
     {
         //frame timing
-        auto now = clock::now();
-        std::chrono::duration<float> delta = now - m_lastTime;
-        m_lastTime = now;
-
-        float deltaTime = delta.count();
-
+        float deltaTime = m_timer.GetDeltaTime();
+        
         Tick(deltaTime);
 
         //Temperory frame cap
@@ -27,18 +23,16 @@ void Engine::Run()
 
 void Engine::Init()
 {
-   //using clock = std::chrono::high_resolution_clock;
-
-    m_lastTime = clock::now();
-
     std::cout << "Engine Start\n";
 
     m_isRunning = true;
 
+    m_timer = Timer();
 }
 
 void Engine::Tick(float _deltaTime)
 {
+
 }
 
 void Engine::ShutDown()

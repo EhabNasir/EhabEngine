@@ -6,3 +6,5 @@ set(CMAKE_CXX_STANDARD 20)
 file(GLOB_RECURSE SOURCES src/*.cpp)
 
 add_executable(MyEngine ${SOURCES})
+
+target_include_directories(MyEngine PRIVATE src)
