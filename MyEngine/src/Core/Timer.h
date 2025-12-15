@@ -1,9 +1,11 @@
 #pragma once
+#include <chrono>
 
 class Timer
 {
 public: 
 	Timer();
+	void Reset();
 	float GetDeltaTime();
 
 private:

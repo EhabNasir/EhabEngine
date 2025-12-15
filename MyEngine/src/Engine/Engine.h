@@ -1,5 +1,6 @@
 #pragma once
-#include <chrono>
+#define FPS60 1.0f / 60.0f
+
 #include "Core/Timer.h"
 
 class Engine
@@ -9,10 +10,12 @@ public:
 
 private:
 	void Init();
-	void Tick(float _deltaTime);
+	void Update(float _deltaTime);
+	void FixedUpdate(float _fixedTime);
 	void ShutDown();
 
 	Timer m_timer;
+	float accumulator = 0.0f;
 
-	bool m_isRunning;
+	bool m_isRunning = false;
 };
