@@ -12,20 +12,26 @@ void Engine::Run()
         //frame timing
         //float deltaTime = m_timer.GetDeltaTime();
         float frameData = m_timer.GetDeltaTime();
-        accumulator += frameData;      
+        accumulator += frameData;
 
-        while (accumulator >= FPS60)
+        //spiral of death prevention
+        accumulator = std::min(accumulator, maxAccumulator);
+
+        int steps;
+
+        const int maxSteps = 5;
+
+        while (accumulator >= FPS60 && steps < maxSteps)
         {
             //Fixed timestep
             FixedUpdate(FPS60);
             accumulator -= FPS60;
+
+            steps++;
         }
 
         //Variable timestep
         Update(frameData);
-
-        //Temperory frame cap
-        std::this_thread::sleep_for(std::chrono::milliseconds(16));
     }
     
     ShutDown();

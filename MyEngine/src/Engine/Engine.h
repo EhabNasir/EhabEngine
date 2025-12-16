@@ -16,6 +16,7 @@ private:
 
 	Timer m_timer;
 	float accumulator = 0.0f;
+	float maxAccumulator = 0.25f;
 
 	bool m_isRunning = false;
 };
