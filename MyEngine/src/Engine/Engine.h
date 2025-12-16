@@ -3,6 +3,7 @@
 
 #include "Core/Timer.h"
 #include "Interfaces/ISystems.h"
+#include "Systems/System_Physics.h"
 
 #include <vector>
 #include <memory>

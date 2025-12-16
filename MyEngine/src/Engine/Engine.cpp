@@ -27,10 +27,6 @@ void Engine::Run()
             //Fixed timestep
             FixedUpdate(FPS60);
 
-            for (auto& system : m_systems)
-            {
-                system->FixedUpdate(FPS60);
-            }
 
             accumulator -= FPS60;
 
@@ -56,6 +52,14 @@ void Engine::Init()
     m_isRunning = true;
 
     m_timer.Reset();
+
+    //create physics system
+    auto physics = std::make_unique<System_Physics>();
+
+    physics->InstantiateGameObject();
+
+    //add system to vector
+    m_systems.push_back(std::move(physics));
 }
 
 void Engine::Update(float _deltaTime)
@@ -65,7 +69,10 @@ void Engine::Update(float _deltaTime)
 
 void Engine::FixedUpdate(float _fixedTime)
 {
-
+    for (auto& system : m_systems)
+    {
+        system->FixedUpdate(FPS60);
+    }
 }
 
 void Engine::ShutDown()
