@@ -1,6 +1,7 @@
 #include "Engine.h"
 #include <iostream>
 #include <thread>
+#include <algorithm>
 
 void Engine::Run()
 {
@@ -17,7 +18,7 @@ void Engine::Run()
         //spiral of death prevention
         accumulator = std::min(accumulator, maxAccumulator);
 
-        int steps;
+        int steps = 0;
 
         const int maxSteps = 5;
 
@@ -25,6 +26,12 @@ void Engine::Run()
         {
             //Fixed timestep
             FixedUpdate(FPS60);
+
+            for (auto& system : m_systems)
+            {
+                system->FixedUpdate(FPS60);
+            }
+
             accumulator -= FPS60;
 
             steps++;
@@ -32,6 +39,11 @@ void Engine::Run()
 
         //Variable timestep
         Update(frameData);
+
+        for (auto& system : m_systems)
+        {
+            system->Update(frameData);
+        }
     }
     
     ShutDown();
