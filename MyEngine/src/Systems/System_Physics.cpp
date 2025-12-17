@@ -18,7 +18,8 @@ void System_Physics::FixedUpdate(float _fixedDelta)
 		body.yVelocity += (gravity/body.mass) * _fixedDelta;
 		transform.y += body.yVelocity * _fixedDelta;
 
-		Debug::PrintNumber(transform.y);
+		//Debug::PrintNumber(transform.y);
+		Debug::DebugPrintArguments("Y Position = %f %s \n", transform.y, "...");
 	}
 }
 
