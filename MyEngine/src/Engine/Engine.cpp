@@ -1,7 +1,9 @@
-#include "Engine.h"
 #include <iostream>
 #include <thread>
 #include <algorithm>
+
+#include "Engine.h"
+#include "Renderer_BGFX.h"
 
 void Engine::Run()
 {
@@ -22,6 +24,9 @@ void Engine::Run()
 
         const int maxSteps = 5;
 
+        //begin rendering frame
+        m_renderer->BeginFrame();
+
         while (accumulator >= FPS60 && steps < maxSteps)
         {
             //Fixed timestep
@@ -40,6 +45,8 @@ void Engine::Run()
         {
             system->Update(frameData);
         }
+
+        m_renderer->EndFrame();
     }
     
     ShutDown();
@@ -53,6 +60,10 @@ void Engine::Init()
 
     m_timer.Reset();
 
+    //set renderer
+    m_renderer = std::make_unique<Renderer_BGFX>();
+    m_renderer->Init();
+
     //create physics system
     auto physics = std::make_unique<System_Physics>();
 
@@ -60,6 +71,7 @@ void Engine::Init()
 
     //add system to vector
     m_systems.push_back(std::move(physics));
+
 }
 
 void Engine::Update(float _deltaTime)

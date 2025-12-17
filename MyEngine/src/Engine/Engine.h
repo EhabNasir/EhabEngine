@@ -4,6 +4,7 @@
 #include "Core/Timer.h"
 #include "Interfaces/ISystems.h"
 #include "Systems/System_Physics.h"
+#include "Interfaces/IRenderer.h"
 
 #include <vector>
 #include <memory>
@@ -24,6 +25,7 @@ private:
 	float maxAccumulator = 0.25f;
 
 	std::vector<std::unique_ptr<ISystem>> m_systems;
+	std::unique_ptr<IRenderer> m_renderer;
 
 	bool m_isRunning = false;
 };
