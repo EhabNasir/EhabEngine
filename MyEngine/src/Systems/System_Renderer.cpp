@@ -1,16 +1,16 @@
 #include "System_Renderer.h"
--
+
 System_Renderer::System_Renderer(IRenderer& _renderer) : m_renderer(_renderer)
 {
 
 }
 
-System_Renderer::Register(GameObjects* _gameObject)
+void System_Renderer::Register(GameObjects* _gameObject)
 {
 	m_objects.push_back(_gameObject);
 }
 
-void System_Render::Update(float)
+void System_Renderer::Update(float)
 {
     for (auto* obj : m_objects)
     {

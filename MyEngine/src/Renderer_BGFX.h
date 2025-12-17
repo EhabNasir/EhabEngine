@@ -1,7 +1,7 @@
 #pragma once
 #include "Interfaces/IRenderer.h"
 
-class Renderer_BGFX : IRenderer
+class Renderer_BGFX : public IRenderer
 {
     bool Init() override;
     void Shutdown() override;
