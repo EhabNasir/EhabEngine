@@ -1,0 +1,6 @@
+[submodule "MyEngine/external/bgfx"]
+	path = MyEngine/external/bgfx
+	url = https://github.com/bkaradzic/bgfx.git
+[submodule "MyEngine/external/bgfx.cmake"]
+	path = MyEngine/external/bgfx.cmake
+	url = https://github.com/bkaradzic/bgfx.cmake.git
