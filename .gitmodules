@@ -4,3 +4,6 @@
 [submodule "MyEngine/external/bgfx.cmake"]
 	path = MyEngine/external/bgfx.cmake
 	url = https://github.com/bkaradzic/bgfx.cmake.git
+[submodule "MyEngine/external/glfw"]
+	path = MyEngine/external/glfw
+	url = https://github.com/glfw/glfw.git
