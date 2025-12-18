@@ -9,6 +9,12 @@ set(BGFX_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 
 add_subdirectory(external/bgfx.cmake)
 
+set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
+
+add_subdirectory(external/glfw)
+
 file(GLOB_RECURSE SOURCES src/*.cpp)
 
 add_executable(MyEngine ${SOURCES})
@@ -19,6 +25,7 @@ target_include_directories(MyEngine
     external/bgfx/include
     external/bx/include
     external/bimg/include
+    external/glfw/include
 )
 
 target_link_libraries(MyEngine
@@ -26,4 +33,5 @@ target_link_libraries(MyEngine
     bgfx
     bx
     bimg
+    glfw
 )
