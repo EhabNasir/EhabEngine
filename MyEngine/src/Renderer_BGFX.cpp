@@ -1,23 +1,39 @@
+#define GLFW_EXPOSE_NATIVE_WIN32
+
+#include <GLFW/glfw3.h>
+#include <GLFW/glfw3native.h>
+
 #include "Renderer_BGFX.h"
 
-#include <bgfx/bgfx.h>
-#include <bgfx/platform.h>
-
-bool Renderer_BGFX::Init()
+bool Renderer_BGFX::Init(void* windowHandle)
 {
-    //bgfx::PlatformData pd{};
-    //pd.nwh = hwnd;   // native window handle
-    //bgfx::setPlatformData(pd);
-
-    bgfx::Init init;
-    init.type = bgfx::RendererType::Count; // auto-select backend
+    bgfx::Init init{};
+    init.type = bgfx::RendererType::Count;
     init.resolution.width = 800;
     init.resolution.height = 600;
     init.resolution.reset = BGFX_RESET_VSYNC;
 
+    // -----------------------------
+    // Platform data (CORRECT WAY)
+    // -----------------------------
+    bgfx::PlatformData pd{};
+    pd.nwh = glfwGetWin32Window(
+        static_cast<GLFWwindow*>(windowHandle)
+    );
+    pd.ndt = nullptr;
+    pd.context = nullptr;
+    pd.backBuffer = nullptr;
+    pd.backBufferDS = nullptr;
+
+    init.platformData = pd;
+
+    // -----------------------------
+    // Init bgfx
+    // -----------------------------
     if (!bgfx::init(init))
         return false;
 
+    bgfx::setViewRect(0, 0, 0, 800, 600);
     bgfx::setViewClear(
         0,
         BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH,
@@ -26,9 +42,7 @@ bool Renderer_BGFX::Init()
         0
     );
 
-    bgfx::setViewRect(0, 0, 0, 800, 600);
-
-	return true;
+    return true;
 }
 
 void Renderer_BGFX::BeginFrame()

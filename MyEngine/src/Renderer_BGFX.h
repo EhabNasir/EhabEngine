@@ -1,9 +1,12 @@
 #pragma once
+#include <bgfx/bgfx.h>
+#include <bgfx/platform.h>
+
 #include "Interfaces/IRenderer.h"
 
 class Renderer_BGFX : public IRenderer
 {
-    bool Init() override;
+    bool Init(void* windowHandle) override;
     void Shutdown() override;
 
     void BeginFrame() override;

@@ -2,12 +2,12 @@
 #define FPS60 1.0f / 60.0f
 
 #include "Core/Timer.h"
+#include <GLFW/glfw3.h>
+#include <vector>
+#include <memory>
 #include "Interfaces/ISystems.h"
 #include "Systems/System_Physics.h"
 #include "Interfaces/IRenderer.h"
-
-#include <vector>
-#include <memory>
 
 class Engine
 {
@@ -19,6 +19,8 @@ private:
 	void Update(float _deltaTime);
 	void FixedUpdate(float _fixedTime);
 	void ShutDown();
+
+	GLFWwindow* window = nullptr;
 
 	Timer m_timer;
 	float accumulator = 0.0f;

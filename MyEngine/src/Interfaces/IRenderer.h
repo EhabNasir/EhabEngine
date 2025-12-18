@@ -5,7 +5,7 @@ class IRenderer
 public:
     virtual ~IRenderer() = default;
 
-    virtual bool Init() = 0;
+    virtual bool Init(void* windowHandle) = 0;
     virtual void Shutdown() = 0;
 
     virtual void BeginFrame() = 0;

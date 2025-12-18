@@ -10,8 +10,9 @@ void Engine::Run()
     Init();
 
     //Engine Loop
-    while (m_isRunning)
+    while (!glfwWindowShouldClose(window) && m_isRunning)
     {
+        glfwPollEvents();
         //frame timing
         //float deltaTime = m_timer.GetDeltaTime();
         float frameData = m_timer.GetDeltaTime();
@@ -60,10 +61,6 @@ void Engine::Init()
 
     m_timer.Reset();
 
-    //set renderer
-    m_renderer = std::make_unique<Renderer_BGFX>();
-    m_renderer->Init();
-
     //create physics system
     auto physics = std::make_unique<System_Physics>();
 
@@ -72,6 +69,33 @@ void Engine::Init()
     //add system to vector
     m_systems.push_back(std::move(physics));
 
+    //Creating window
+    if (!glfwInit())
+    {
+        throw std::runtime_error("Failed to initialize GLFW");
+    }
+
+    glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API); // IMPORTANT: bgfx manages graphics not opengl
+
+    window = glfwCreateWindow(
+        800,
+        600,
+        "MyEngine",
+        nullptr,
+        nullptr
+    );
+
+    if (!window)
+    {
+        glfwTerminate();
+        throw std::runtime_error("Failed to create GLFW window");
+    }
+
+    bgfx::renderFrame();
+
+    //set renderer
+    m_renderer = std::make_unique<Renderer_BGFX>();
+    m_renderer->Init(window);
 }
 
 void Engine::Update(float _deltaTime)
@@ -90,4 +114,7 @@ void Engine::FixedUpdate(float _fixedTime)
 void Engine::ShutDown()
 {
     std::cout << "Engine Shutdown\n";
+
+    glfwDestroyWindow(window);
+    glfwTerminate();
 }
