@@ -80,7 +80,7 @@ void Engine::Init()
     window = glfwCreateWindow(
         800,
         600,
-        "MyEngine",
+        "EhabEngine",
         nullptr,
         nullptr
     );
