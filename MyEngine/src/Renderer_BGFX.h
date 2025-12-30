@@ -1,8 +1,10 @@
 #pragma once
+
 #include <bgfx/bgfx.h>
 #include <bgfx/platform.h>
 
 #include "Interfaces/IRenderer.h"
+#include <bx/math.h>
 
 class Renderer_BGFX : public IRenderer
 {
@@ -14,4 +16,11 @@ class Renderer_BGFX : public IRenderer
 
     // Debug rendering (for now)
     void DrawQuad(float x, float y) override;
+
+    bgfx::VertexLayout m_layout;
+    bgfx::ProgramHandle m_program;
+
+    bgfx::VertexBufferHandle m_vbh = BGFX_INVALID_HANDLE;
+    bgfx::IndexBufferHandle  m_ibh = BGFX_INVALID_HANDLE;
+
 };
