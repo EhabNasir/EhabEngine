@@ -2,6 +2,7 @@
 #define WIN32_LEAN_AND_MEAN
 #define GLFW_EXPOSE_NATIVE_WIN32
 
+#include "direct.h"
 #include <GLFW/glfw3.h>
 #include <GLFW/glfw3native.h>
 #include <fstream>
@@ -31,7 +32,13 @@ static const uint16_t s_indices[] =
 
 static bgfx::ShaderHandle LoadShader(const char* path)
 {
+    char cwd[512];
+    _getcwd(cwd, sizeof(cwd));
+    BX_TRACE("CWD = %s", cwd);
+    BX_TRACE("Trying to open: %s", path);
+
     FILE* file = fopen(path, "rb");
+    BX_ASSERT(file, "errrr");
     if (!file)
         return BGFX_INVALID_HANDLE;
 
@@ -52,7 +59,7 @@ static bgfx::ShaderHandle LoadShader(const char* path)
 bool Renderer_BGFX::Init(void* windowHandle)
 {
     bgfx::Init init{};
-    init.type = bgfx::RendererType::Count;
+    init.type = bgfx::RendererType::Direct3D11;
     init.resolution.width = 800;
     init.resolution.height = 600;
     init.resolution.reset = BGFX_RESET_VSYNC;
@@ -77,7 +84,22 @@ bool Renderer_BGFX::Init(void* windowHandle)
     if (!bgfx::init(init))
         return false;
 
+    //Setting view projection
     bgfx::setViewRect(0, 0, 0, 800, 600);
+    float view[16];
+    float proj[16];
+
+    bx::mtxIdentity(view);
+    bx::mtxOrtho(
+        proj,
+        -1.0f, 1.0f,
+        -1.0f, 1.0f,
+        0.0f, 100.0f,
+        0.0f,
+        bgfx::getCaps()->homogeneousDepth
+    );
+
+    bgfx::setViewTransform(0, view, proj);
     bgfx::setViewClear(
         0,
         BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH,
@@ -86,8 +108,8 @@ bool Renderer_BGFX::Init(void* windowHandle)
         0
     );
 
-    bgfx::ShaderHandle vs = LoadShader("shaders/bin/dx11/simple.vs.bin");
-    bgfx::ShaderHandle fs = LoadShader("shaders/bin/dx11/simple.fs.bin");
+    bgfx::ShaderHandle fs = LoadShader("../../../Shaders/bin/dx11/simple.fs.bin");
+    bgfx::ShaderHandle vs = LoadShader("../../../Shaders/bin/dx11/simple.vs.bin");
 
     BX_ASSERT(bgfx::isValid(vs), "Vertex shader invalid");
     BX_ASSERT(bgfx::isValid(fs), "Fragment shader invalid");
@@ -115,25 +137,24 @@ void Renderer_BGFX::BeginFrame()
 {
 	bgfx::touch(0);
 
+    //Setting view projection
+    bgfx::setViewRect(0, 0, 0, 800, 600);
     float view[16];
     float proj[16];
 
     bx::mtxIdentity(view);
     bx::mtxIdentity(proj);
-
     bgfx::setViewTransform(0, view, proj);
+
     // Identity transform
     float mtx[16];
     bx::mtxIdentity(mtx);
-    //bgfx::setTransform(mtx);
+    bgfx::setTransform(mtx);
 
     bgfx::setVertexBuffer(0, m_vbh);
     bgfx::setIndexBuffer(m_ibh);
     //bgfx::setState(BGFX_STATE_DEFAULT);
     bgfx::setState(BGFX_STATE_WRITE_RGB | BGFX_STATE_WRITE_A);
-
-
-
 
     bgfx::submit(0, m_program);
 }
