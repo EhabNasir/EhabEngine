@@ -148,7 +148,8 @@ void Renderer_BGFX::BeginFrame()
 
     // Identity transform
     float mtx[16];
-    bx::mtxIdentity(mtx);
+    //bx::mtxIdentity(mtx);
+    bx::mtxTranslate(mtx, 0.8f, 0.0f, 0.0f);
     bgfx::setTransform(mtx);
 
     bgfx::setVertexBuffer(0, m_vbh);

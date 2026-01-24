@@ -1,0 +1,21 @@
+Vertex Shader Recompile command:
+
+tools\shaderc\shaderc.exe ^
+  -f Shaders/src/simple.vs.sc ^
+  -o Shaders/bin/dx11/simple.vs.bin ^
+  --type vertex ^
+  --platform windows ^
+  --profile s_5_0 ^
+  -i external/bgfx/src ^
+  --varyingdef Shaders/src/varying.def.sc
+
+Fragment Shader Recompile command:
+
+tools\shaderc\shaderc.exe ^
+  -f Shaders/src/simple.fs.sc ^
+  -o Shaders/bin/dx11/simple.fs.bin ^
+  --type fragment ^
+  --platform windows ^
+  --profile s_5_0 ^
+  -i external/bgfx/src ^
+  --varyingdef Shaders/src/varying.def.sc
