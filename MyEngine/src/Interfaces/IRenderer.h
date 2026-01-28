@@ -12,5 +12,5 @@ public:
     virtual void EndFrame() = 0;
 
     // Debug rendering (for now)
-    virtual void DrawQuad(float x, float y) = 0;
+    virtual void DrawQuad(float x, float y, float _sizeX, float _sizeY) = 0;
 };

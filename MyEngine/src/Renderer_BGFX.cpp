@@ -146,18 +146,10 @@ void Renderer_BGFX::BeginFrame()
     bx::mtxIdentity(proj);
     bgfx::setViewTransform(0, view, proj);
 
-    // Identity transform
-    float mtx[16];
-    //bx::mtxIdentity(mtx);
-    bx::mtxTranslate(mtx, 0.8f, 0.0f, 0.0f);
-    bgfx::setTransform(mtx);
+    //DrawQuad(0.8f, 0, 0.2f, 0);
 
-    bgfx::setVertexBuffer(0, m_vbh);
-    bgfx::setIndexBuffer(m_ibh);
-    //bgfx::setState(BGFX_STATE_DEFAULT);
-    bgfx::setState(BGFX_STATE_WRITE_RGB | BGFX_STATE_WRITE_A);
+    //DrawQuad(-0.8f, 0, 0.5f, 0);
 
-    bgfx::submit(0, m_program);
 }
 void Renderer_BGFX::EndFrame()
 {
@@ -170,7 +162,31 @@ void Renderer_BGFX::Shutdown()
 }
 
 // Debug rendering (for now)
-void Renderer_BGFX::DrawQuad(float x, float y)
-{
+void Renderer_BGFX::DrawQuad(float _posX, float _posY, float _sizeX, float _sizeY)
+{       
+    // Identity transform
+    float mtxTrans[16];
+    float mtxScale[16];
+    float mtxRotate[16];
 
+    float mtx[16];
+    //bx::mtxIdentity(mtx);
+    bx::mtxScale(mtxScale, _sizeX);
+    bx::mtxTranslate(mtxTrans, _posX, _posY, 0.0f);
+    bx::mtxIdentity(mtxRotate);
+
+    //bx::mtxSRT(mtx, );
+
+    bx::mtxMul(mtx, mtxTrans, mtxScale);
+    //bx::mtxMul(mtx, mtxScale, mtxRotate);
+    //bx::mtxMul(mtx, mtxRotate, mtxTrans);
+
+    bgfx::setTransform(mtx);
+
+    bgfx::setVertexBuffer(0, m_vbh);
+    bgfx::setIndexBuffer(m_ibh);
+    //bgfx::setState(BGFX_STATE_DEFAULT);
+    bgfx::setState(BGFX_STATE_WRITE_RGB | BGFX_STATE_WRITE_A);
+
+    bgfx::submit(0, m_program);
 }

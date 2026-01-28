@@ -15,6 +15,8 @@ public:
 
 	void InstantiateGameObject();
 
+	std::vector<GameObjects*> GetGameObjects() { return m_GameObjects; }
+
 private:
 	std::vector<GameObjects*> m_GameObjects;
 };

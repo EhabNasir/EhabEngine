@@ -16,16 +16,17 @@ void System_Physics::FixedUpdate(float _fixedDelta)
 		auto& body = gameObject->GetRigidBody();
 
 		body.yVelocity += (gravity/body.mass) * _fixedDelta;
-		transform.y += body.yVelocity * _fixedDelta;
+		//transform.y += body.yVelocity * _fixedDelta;
 
 		//Debug::PrintNumber(transform.y);
-		Debug::DebugPrintArguments("Y Position = %f %s \n", transform.y, "...");
+		//Debug::DebugPrintArguments("Y Position = %f %s \n", transform.y, "...");
 	}
 }
 
 void System_Physics::InstantiateGameObject()
 {
 	GameObjects* obj = new GameObjects();
+	obj->SetTransform(0, 0);
 	m_GameObjects.push_back(obj);
 }
 

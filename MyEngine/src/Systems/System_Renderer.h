@@ -8,7 +8,7 @@
 class System_Renderer : public ISystem
 {
 public:
-	System_Renderer(IRenderer& _render);
+	System_Renderer(IRenderer* _render);
 
 	void Update(float deltaTime) override;
 	void FixedUpdate(float) override {}
@@ -16,6 +16,6 @@ public:
 	void Register(GameObjects* _gameObjects);
 
 private:
-	IRenderer& m_renderer;
+	IRenderer* m_renderer;
 	std::vector<GameObjects*> m_objects;
 };

@@ -3,7 +3,9 @@
 #include <algorithm>
 
 #include "Engine.h"
+#include "Systems/System_Renderer.h"
 #include "Renderer_BGFX.h"
+#include "Core/Debug.h"
 
 void Engine::Run()
 {
@@ -45,6 +47,9 @@ void Engine::Run()
         for (auto& system : m_systems)
         {
             system->Update(frameData);
+
+            if(m_systems.size() > 1)
+                Debug::DebugPrintArguments("Help");
         }
 
         m_renderer->EndFrame();
@@ -61,13 +66,7 @@ void Engine::Init()
 
     m_timer.Reset();
 
-    //create physics system
-    auto physics = std::make_unique<System_Physics>();
 
-    physics->InstantiateGameObject();
-
-    //add system to vector
-    m_systems.push_back(std::move(physics));
 
     //Creating window
     if (!glfwInit())
@@ -94,8 +93,24 @@ void Engine::Init()
     bgfx::renderFrame();
 
     //set renderer
-    m_renderer = std::make_unique<Renderer_BGFX>();
+    m_renderer = new Renderer_BGFX();
     m_renderer->Init(window);
+    //creating and adding rendering
+    auto rendering = new System_Renderer(m_renderer);
+
+    m_systems.push_back(std::move(rendering));
+    //create physics system
+    auto physics = new System_Physics();
+
+    physics->InstantiateGameObject();
+
+    for (auto obj : physics->GetGameObjects())
+    {
+        rendering->Register(obj);
+    }
+
+    //add system to vector
+    m_systems.push_back(std::move(physics));
 }
 
 void Engine::Update(float _deltaTime)

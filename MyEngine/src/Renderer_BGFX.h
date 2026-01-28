@@ -3,6 +3,7 @@
 #include <bgfx/bgfx.h>
 #include <bgfx/platform.h>
 
+#include "Core/Vector3.h"
 #include "Interfaces/IRenderer.h"
 #include <bx/math.h>
 
@@ -15,7 +16,7 @@ class Renderer_BGFX : public IRenderer
     void EndFrame() override;
 
     // Debug rendering (for now)
-    void DrawQuad(float x, float y) override;
+    void DrawQuad(float x, float y, float _sizeX, float _sizeY) override;
 
     bgfx::VertexLayout m_layout;
     bgfx::ProgramHandle m_program;

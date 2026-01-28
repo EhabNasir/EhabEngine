@@ -26,8 +26,9 @@ private:
 	float accumulator = 0.0f;
 	float maxAccumulator = 0.25f;
 
-	std::vector<std::unique_ptr<ISystem>> m_systems;
-	std::unique_ptr<IRenderer> m_renderer;
+	std::vector<ISystem*> m_systems;
+	//std::unique_ptr<IRenderer> m_renderer;
+	IRenderer* m_renderer;
 
 	bool m_isRunning = false;
 };
