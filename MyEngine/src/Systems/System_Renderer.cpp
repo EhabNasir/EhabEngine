@@ -15,9 +15,9 @@ void System_Renderer::Update(float)
 {
     Debug::DebugPrintArguments("%f", m_objects.size());
 
-    for (auto* obj : m_objects)
+    for (GameObjects* obj : m_objects)
     {
         const auto& t = obj->GetTransform();
-        m_renderer->DrawQuad(t.x, t.y, 0.5f, 0);
+        m_renderer->DrawQuad(t->GetTransform().x, t->GetTransform().y, 0.5f, 0);
     }
 }

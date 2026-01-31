@@ -1,10 +1,5 @@
 #pragma once
-
-struct Transform
-{
-	float x;
-	float y;
-};
+#include "Transform.h"
 
 struct RigidBody
 {
@@ -20,13 +15,12 @@ public:
 	GameObjects();
 	~GameObjects();
 
-	Transform& GetTransform() { return m_Transform; }
-	void SetTransform(float _x, float _y);
+	Transform* GetTransform() { return m_Transform; }
 
 	RigidBody& GetRigidBody() { return m_RigidBody; }
 	void SetRigidBody(float _xVelocity, float _yVelocity, float _mass);
 
 private:
-	Transform m_Transform;
+	Transform* m_Transform;
 	RigidBody m_RigidBody;
 };
