@@ -55,13 +55,12 @@ static bgfx::ShaderHandle LoadShader(const char* path)
     return bgfx::createShader(mem);
 }
 
-
 bool Renderer_BGFX::Init(void* windowHandle)
 {
     bgfx::Init init{};
     init.type = bgfx::RendererType::Direct3D11;
-    init.resolution.width = 800;
-    init.resolution.height = 600;
+    init.resolution.width = 1920;
+    init.resolution.height = 1080;
     init.resolution.reset = BGFX_RESET_VSYNC;
 
     // -----------------------------
@@ -85,7 +84,7 @@ bool Renderer_BGFX::Init(void* windowHandle)
         return false;
 
     //Setting view projection
-    bgfx::setViewRect(0, 0, 0, 800, 600);
+    bgfx::setViewRect(0, 0, 0, 1920, 1080);
     float view[16];
     float proj[16];
 
@@ -95,7 +94,8 @@ bool Renderer_BGFX::Init(void* windowHandle)
     bx::mtxOrtho(proj,
         -float(m_width / 2.0f), float(m_width / 2.0f),
         -float(m_height / 2.0f), float(m_height / 2.0f),
-        0.0f, 100.0f, 0.0f,
+        -1.0f, 1.0f, 
+        0.0f,
         bgfx::getCaps()->homogeneousDepth);
 
     bgfx::setViewTransform(0, view, proj);
@@ -131,24 +131,38 @@ bool Renderer_BGFX::Init(void* windowHandle)
     return true;
 }
 
-void Renderer_BGFX::BeginFrame()
+void Renderer_BGFX::BeginFrame(const Camera& camera)
 {
 	bgfx::touch(0);
 
     //Setting view projection
     bgfx::setViewRect(0, 0, 0, m_width, m_height);
+
+    //bx::mtxIdentity(proj);
+
     float view[16];
     float proj[16];
 
-    bx::mtxIdentity(view);
-    bx::mtxIdentity(proj);
+    //bx::mtxIdentity(view);
+    // Build view matrix from camera position
+    bx::mtxTranslate(view, -camera.xPos, -camera.yPos, 0.0f);
+
+    // Build projection with zoom applied
+    float halfWidth = (m_width / 2.0f) / camera.zoom;
+    float halfHeight = (m_height / 2.0f) / camera.zoom;
+
+    bx::mtxOrtho(
+        proj,
+        -halfWidth, halfWidth,   // left, right
+        -halfHeight, halfHeight,  // bottom, top
+        -1.0f, 1.0f,             // near, far
+        0.0f,
+        bgfx::getCaps()->homogeneousDepth
+    );
+
     bgfx::setViewTransform(0, view, proj);
-
-    //DrawQuad(0.8f, 0, 0.2f, 0);
-
-    //DrawQuad(-0.8f, 0, 0.5f, 0);
-
 }
+
 void Renderer_BGFX::EndFrame()
 {
 	bgfx::frame();
@@ -169,7 +183,7 @@ void Renderer_BGFX::DrawQuad(float _posX, float _posY, float _sizeX, float _size
 
     float mtx[16];
     //bx::mtxIdentity(mtx);
-    bx::mtxScale(mtxScale, _sizeX);
+    bx::mtxScale(mtxScale, _sizeX, _sizeY, 1.0f);
     bx::mtxTranslate(mtxTrans, _posX, _posY, 0.0f);
     bx::mtxIdentity(mtxRotate);
 

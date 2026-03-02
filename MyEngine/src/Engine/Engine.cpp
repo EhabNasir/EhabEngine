@@ -11,6 +11,11 @@ void Engine::Run()
 {
     Init();
 
+    //Camera SetUp
+    m_camera.xPos = 0.0f;
+    m_camera.yPos = 90.0f;
+    m_camera.zoom = 1.0f;
+
     //Engine Loop
     while (!glfwWindowShouldClose(window) && m_isRunning)
     {
@@ -28,7 +33,7 @@ void Engine::Run()
         const int maxSteps = 5;
 
         //begin rendering frame
-        m_renderer->BeginFrame();
+        m_renderer->BeginFrame(m_camera);
 
         while (accumulator >= FPS60 && steps < maxSteps)
         {
@@ -77,8 +82,8 @@ void Engine::Init()
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API); // IMPORTANT: bgfx manages graphics not opengl
 
     window = glfwCreateWindow(
-        800,
-        600,
+        1920,
+        1080,
         "EhabEngine",
         nullptr,
         nullptr

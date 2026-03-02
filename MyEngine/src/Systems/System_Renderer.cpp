@@ -18,6 +18,6 @@ void System_Renderer::Update(float)
     for (GameObjects* obj : m_objects)
     {
         const auto& t = obj->GetTransform();
-        m_renderer->DrawQuad(t->GetTransform().x, t->GetTransform().y, 0.5f, 0);
+        m_renderer->DrawQuad(t->GetTransform().x, t->GetTransform().y, 20.0f, 20.0f);
     }
 }

@@ -1,5 +1,7 @@
 #pragma once
 
+struct Camera;
+
 class IRenderer
 {
 public:
@@ -8,7 +10,7 @@ public:
     virtual bool Init(void* windowHandle) = 0;
     virtual void Shutdown() = 0;
 
-    virtual void BeginFrame() = 0;
+    virtual void BeginFrame(const Camera& camera) = 0;
     virtual void EndFrame() = 0;
 
     // Debug rendering (for now)

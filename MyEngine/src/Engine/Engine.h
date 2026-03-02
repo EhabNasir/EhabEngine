@@ -7,6 +7,7 @@
 #include <memory>
 #include "Interfaces/ISystems.h"
 #include "Systems/System_Physics.h"
+#include "Systems/Camera.h"
 #include "Interfaces/IRenderer.h"
 
 class Engine
@@ -29,6 +30,8 @@ private:
 	std::vector<ISystem*> m_systems;
 	//std::unique_ptr<IRenderer> m_renderer;
 	IRenderer* m_renderer;
+
+	Camera m_camera;
 
 	bool m_isRunning = false;
 };

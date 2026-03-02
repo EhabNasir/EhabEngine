@@ -8,7 +8,7 @@ void System_Physics::Update(float _deltaTime)
 
 void System_Physics::FixedUpdate(float _fixedDelta)
 {
-	float gravity = -9.8f;
+	gravity += _fixedDelta;
 
 	for (auto& gameObject : m_GameObjects)
 	{
@@ -16,6 +16,8 @@ void System_Physics::FixedUpdate(float _fixedDelta)
 		auto& body = gameObject->GetRigidBody();
 
 		body.yVelocity += (gravity/body.mass) * _fixedDelta;
+
+		//gameObject->GetTransform()->SetPosition(0.0f, gravity);
 		//transform.y += body.yVelocity * _fixedDelta;
 
 		//Debug::PrintNumber(transform.y);
@@ -26,7 +28,7 @@ void System_Physics::FixedUpdate(float _fixedDelta)
 void System_Physics::InstantiateGameObject()
 {
 	GameObjects* obj = new GameObjects();
-	obj->GetTransform()->SetPosition(0.0f, 0.0f);
+	obj->GetTransform()->SetPosition(0.0f, 90.0f);
 	m_GameObjects.push_back(obj);
 }
 

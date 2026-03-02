@@ -5,6 +5,7 @@
 
 #include "Core/Vector3.h"
 #include "Interfaces/IRenderer.h"
+#include "Systems/Camera.h"
 #include <bx/math.h>
 
 class Renderer_BGFX : public IRenderer
@@ -12,7 +13,7 @@ class Renderer_BGFX : public IRenderer
     bool Init(void* windowHandle) override;
     void Shutdown() override;
 
-    void BeginFrame() override;
+    void BeginFrame(const Camera& camera) override;
     void EndFrame() override;
 
     // Debug rendering (for now)
@@ -25,8 +26,8 @@ class Renderer_BGFX : public IRenderer
     bgfx::IndexBufferHandle  m_ibh = BGFX_INVALID_HANDLE;
 
 private:
-    uint16_t m_height = 600;
-    uint16_t m_width = 800;
+    uint16_t m_width = 1920;
+    uint16_t m_height = 1080;
 
     float m_projMatrix[16];
 };
