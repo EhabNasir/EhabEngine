@@ -26,7 +26,7 @@ void System_Physics::FixedUpdate(float _fixedDelta)
 void System_Physics::InstantiateGameObject()
 {
 	GameObjects* obj = new GameObjects();
-	obj->GetTransform()->SetPosition(0, 0);
+	obj->GetTransform()->SetPosition(0.0f, 0.0f);
 	m_GameObjects.push_back(obj);
 }
 

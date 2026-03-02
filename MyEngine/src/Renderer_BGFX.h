@@ -24,4 +24,9 @@ class Renderer_BGFX : public IRenderer
     bgfx::VertexBufferHandle m_vbh = BGFX_INVALID_HANDLE;
     bgfx::IndexBufferHandle  m_ibh = BGFX_INVALID_HANDLE;
 
+private:
+    uint16_t m_height = 600;
+    uint16_t m_width = 800;
+
+    float m_projMatrix[16];
 };

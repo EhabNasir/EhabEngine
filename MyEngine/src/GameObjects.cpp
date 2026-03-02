@@ -6,7 +6,7 @@
 GameObjects::GameObjects()
 {
 	m_Transform = new Transform();
-	m_Transform->SetPosition(5, 5);
+	m_Transform->SetPosition(0, 100);
 
 	m_RigidBody.mass = 0.5f;
 }

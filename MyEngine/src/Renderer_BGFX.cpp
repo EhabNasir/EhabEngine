@@ -89,15 +89,14 @@ bool Renderer_BGFX::Init(void* windowHandle)
     float view[16];
     float proj[16];
 
+    //Build projection matrix
+    //Map world coordinates to NDC
     bx::mtxIdentity(view);
-    bx::mtxOrtho(
-        proj,
-        -1.0f, 1.0f,
-        -1.0f, 1.0f,
-        0.0f, 100.0f,
-        0.0f,
-        bgfx::getCaps()->homogeneousDepth
-    );
+    bx::mtxOrtho(proj,
+        -float(m_width / 2.0f), float(m_width / 2.0f),
+        -float(m_height / 2.0f), float(m_height / 2.0f),
+        0.0f, 100.0f, 0.0f,
+        bgfx::getCaps()->homogeneousDepth);
 
     bgfx::setViewTransform(0, view, proj);
     bgfx::setViewClear(
@@ -105,8 +104,7 @@ bool Renderer_BGFX::Init(void* windowHandle)
         BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH,
         0x303030ff,
         1.0f,
-        0
-    );
+        0);
 
     bgfx::ShaderHandle fs = LoadShader("../../../Shaders/bin/dx11/simple.fs.bin");
     bgfx::ShaderHandle vs = LoadShader("../../../Shaders/bin/dx11/simple.vs.bin");
@@ -138,7 +136,7 @@ void Renderer_BGFX::BeginFrame()
 	bgfx::touch(0);
 
     //Setting view projection
-    bgfx::setViewRect(0, 0, 0, 800, 600);
+    bgfx::setViewRect(0, 0, 0, m_width, m_height);
     float view[16];
     float proj[16];
 
