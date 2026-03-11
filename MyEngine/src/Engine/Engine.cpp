@@ -65,7 +65,7 @@ void Engine::Run()
 
 void Engine::Init()
 {
-    std::cout << "~EHAB ENGINE~\n";
+    std::cout << "~RagTag ENGINE~\n";
 
     m_isRunning = true;
 

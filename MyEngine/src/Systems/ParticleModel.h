@@ -7,4 +7,7 @@ class ParticleModel
 public:
 	void Update(float _deltaTime);
 	void FixedUpdate(float _fixedDelta);
+
+private:
+	//Transform
 };

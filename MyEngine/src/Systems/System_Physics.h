@@ -20,5 +20,5 @@ public:
 private:
 	std::vector<GameObjects*> m_GameObjects;
 
-	float gravity = 0.0f;
+	float gravity = -9.0f;
 };
